@@ -99,7 +99,7 @@ The instruction how to run the shape retrieval experiment:
 ### O-CNN for Shape Segmentation
 The instruction how to run the segmentation experiment: 
 
-- The original part annotation data is provided as the supplemental material of the work "[A Scalable Active Framework for Region Annotation in 3D Shape Collections](http://cs.stanford.edu/~ericyi/project_page/part_annotation/index.html)". As detailed in Section 5.3 of our paper, the point cloud in the original dataset is relatively sparse and the normal information is missing. We convert the sparse point clouds to dense points with normal information and correct part annotation.  Here is [the converted dataset](https://www.dropbox.com/sh/gf44zmkdix9kwdp/AAAuPSDnWnh-_J9AQTNH3tnca?dl=0) for your convenience.
+- The original part annotation data is provided as the supplemental material of the work "[A Scalable Active Framework for Region Annotation in 3D Shape Collections](http://cs.stanford.edu/~ericyi/project_page/part_annotation/index.html)". As detailed in Section 5.3 of our paper, the point cloud in the original dataset is relatively sparse and the normal information is missing. We convert the sparse point clouds to dense points with normal information and correct part annotation.  Here is [one converted dataset](http://pan.baidu.com/s/1jHRRfuA) for your convenience, and we will release more data soon.
 - convert the dataset to a `lmdb` database.
 - Download the protocol buffer files, which are contained in the folder `caffe/examples/o-cnn`.
 - For CRF refinement, please refer to the code provided [here](https://github.com/wang-ps/O-CNN/tree/master/densecrf).  We will provide the automated tool soon.
