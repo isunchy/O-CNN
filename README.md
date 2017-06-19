@@ -41,26 +41,7 @@ For achieving better performance,  we store all the octree inputs in a  `leveldb
 
 - Download and unzip the corresponding 3D model dataset (like the [ModelNet40](http://modelnet.cs.princeton.edu) dataset) into a folder. 
 
-- Convert all the models (in OBJ/OFF format) to dense point clouds with normals (in POINTS format). As detailed in our paper, we build a virtual scanner and shoot rays to calculate the intersection points and oriented normals. The executable files and source code can be downloaded [here](https://github.com/wang-ps/O-CNN/tree/master/virtual%20scanner).  
-
-  Usage: `VirtualScanner <filelist> [nviews]`
-
-  `filelist: a text file whose each line specifies the full path name of an OBJ file `
-
-  `nviews: the number of views for scanning. suggested value: 14`
-
-  ​
-
-
-    **POINTS format (in binary)**:
-
-    Number_of_Points  
-
-    Coordinates of point (x,y,z float type) 
-
-    Normal of points(x,y,z float type)
-
-    Segmentation id of point (integer type) #use for shape segmentation only
+- Convert all the models (in OBJ/OFF format) to dense point clouds with normals (in POINTS format). As detailed in our paper, we build a virtual scanner and shoot rays to calculate the intersection points and oriented normals. The executable files and source code can be downloaded [here](https://github.com/wang-ps/O-CNN/tree/master/virtual%20scanner). 
 
 - Run the tool `octree.exe` to convert point clouds into the octree files.
 

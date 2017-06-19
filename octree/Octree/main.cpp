@@ -18,9 +18,7 @@ int view_num = 24;
 bool segmentation = false;
 
 void get_all_filenames(vector<string>& filenames, const string& data_list);
-void open_pointcloud(vector<float>& pt, vector<float>& normal, 
-	const string& _filename);
-void open_pointcloud_seg(vector<float>& pt, vector<float>& normal,
+void load_pointcloud(vector<float>& pt, vector<float>& normal,
 	vector<int>& seg, const string& _filename);
 void rotation_matrix(float* rot, const float angle, const float* axis);
 void matrix_prod(float* C, const float*A, const float*B,
@@ -53,15 +51,8 @@ int main(int argc, char* argv[])
 	{
 		vector<float> Pt, normal, C;
 		vector<int> seg;
-		if (segmentation)
-		{
-			open_pointcloud_seg(Pt, normal, seg, all_files[i]);
-		}
-		else
-		{
-			open_pointcloud(Pt, normal, all_files[i]);
-		}
-		
+		load_pointcloud(Pt, normal, seg, all_files[i]);
+
 		// bounding sphere
 		float radius;
 		float center[3]; 
@@ -143,44 +134,23 @@ void get_all_filenames(vector<string>& filenames, const string& data_list)
 
 }
 
-void open_pointcloud(vector<float>& pt,	vector<float>& normal, 
-	const string& _filename)
+void load_pointcloud(vector<float>& pt,	vector<float>& normal,
+	vector<int>& seg, const string& filename)
 {
-	std::ifstream infile(_filename, std::ios::binary);
-
-	infile.seekg(0, infile.end);
-	int len = infile.tellg();
-	infile.seekg(0, infile.beg);
-
-	int n = len / sizeof(float) / 2;
-	pt.resize(n);
-	normal.resize(n);
-
-	infile.read((char*)pt.data(), sizeof(float)*n);
-	infile.read((char*)normal.data(), sizeof(float)*n);
-	
-	infile.close();
-}
-
-void open_pointcloud_seg(vector<float>& pt,	vector<float>& normal,
-	vector<int>& seg, const string& _filename)
-{
-	std::ifstream infile(_filename, std::ios::binary);
+	std::ifstream infile(filename, std::ios::binary);
 
 	infile.seekg(0, infile.end);
 	int len = infile.tellg();
 	infile.seekg(0, infile.beg);
 
 	int n;
-	infile.read((char*)(&n), sizeof(int));
-	
+	infile.read((char*)(&n), sizeof(int));	
 	pt.resize(3 * n);
 	infile.read((char*)pt.data(), sizeof(float)*3*n);
-
 	normal.resize(3 * n);
 	infile.read((char*)normal.data(), sizeof(float)*3*n);
 
-	if (6*n*sizeof(float)+sizeof(int) < len)
+	if (6 * n * sizeof(float) + (n + 1) * sizeof(int) == len)
 	{
 		seg.resize(n);
 		infile.read((char*)seg.data(), sizeof(int)*n);
